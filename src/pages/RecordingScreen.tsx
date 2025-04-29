@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AlertTriangle, Construction, AlertCircle, MapPin, StopCircle } from 'lucide-react';
 import DetectionAlert from '@/components/DetectionAlert';
@@ -17,6 +18,7 @@ const RecordingScreen: React.FC = () => {
   const navigate = useNavigate();
   const [recordingTime, setRecordingTime] = useState(0);
   const [showDetection, setShowDetection] = useState<{ type: 'pothole' | 'construction' | 'warning' | 'success', message: string } | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
   
   // Format seconds as MM:SS
   const formatTime = (seconds: number): string => {
@@ -70,24 +72,38 @@ const RecordingScreen: React.FC = () => {
     
     return () => detectionTimers.forEach(timer => clearTimeout(timer));
   }, []);
+
+  // Initialize MapBox if needed
+  useEffect(() => {
+    // Here we would normally initialize Mapbox but we're not doing it in this prototype
+    // since we don't have an actual API key
+  }, []);
   
   return (
     <div className="relative min-h-screen bg-black">
-      {/* Simulated camera view/dashcam footage */}
+      {/* YouTube video as dashcam footage */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-full h-full bg-gray-900 flex items-center justify-center">
-          {/* This would be replaced with actual camera feed */}
-          <div className="w-full h-full bg-gradient-to-b from-gray-800 to-gray-900 relative">
-            {/* Simulated road */}
-            <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-gray-700 to-gray-800">
-              <div className="absolute left-1/2 top-0 bottom-0 w-4 bg-urbanPulse-lightGray/30 transform -translate-x-1/2"></div>
-              <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-urbanPulse-lightGray transform -translate-x-1/2 flex flex-col justify-between">
-                <div className="h-12 w-1"></div>
-                <div className="h-12 w-1 bg-urbanPulse-white"></div>
-                <div className="h-12 w-1"></div>
-                <div className="h-12 w-1 bg-urbanPulse-white"></div>
-                <div className="h-12 w-1"></div>
-              </div>
+        <div className="w-full h-2/3 bg-gray-900 flex items-center justify-center overflow-hidden">
+          <iframe
+            className="w-full h-full"
+            src="https://www.youtube.com/embed/6ZFs7zolVHk?autoplay=1&mute=1&controls=0&disablekb=1&loop=1&modestbranding=1&showinfo=0&playlist=6ZFs7zolVHk"
+            title="Road Map Footage"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </div>
+      
+      {/* Mapbox map at bottom */}
+      <div className="absolute bottom-24 left-4 right-4 h-1/4 bg-gray-800 rounded-lg overflow-hidden">
+        <div ref={mapContainerRef} className="w-full h-full">
+          {/* Placeholder for MapBox */}
+          <div className="w-full h-full bg-gradient-to-r from-urbanPulse-darkGray to-gray-800 flex items-center justify-center">
+            <div className="city-grid absolute inset-0 opacity-30"></div>
+            <div className="text-urbanPulse-lightGray text-sm">
+              <MapPin className="w-5 h-5 mb-2 mx-auto text-urbanPulse-green animate-pulse" />
+              Real-time location tracking
             </div>
           </div>
         </div>
@@ -124,7 +140,7 @@ const RecordingScreen: React.FC = () => {
         <DetectionAlert type={showDetection.type} message={showDetection.message} />
       )}
       
-      {/* Contextual indicators will appear here when detections happen */}
+      {/* Contextual indicators that appear during detections */}
       {recordingTime > 4 && recordingTime < 8 && (
         <div className="absolute bottom-40 left-32 rounded-full w-12 h-12 border-2 border-urbanPulse-green animate-pulse flex items-center justify-center">
           <AlertCircle className="text-urbanPulse-green w-6 h-6" />
