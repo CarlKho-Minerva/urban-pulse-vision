@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AlertTriangle, Construction, Pothole, Check } from 'lucide-react';
+import { AlertTriangle, Construction, AlertCircle, Check } from 'lucide-react';
 
 interface DetectionAlertProps {
   type: 'pothole' | 'construction' | 'warning' | 'success';
@@ -9,7 +9,7 @@ interface DetectionAlertProps {
 
 const DetectionAlert: React.FC<DetectionAlertProps> = ({ type, message }) => {
   const icons = {
-    pothole: <Pothole className="w-5 h-5 text-urbanPulse-green" />,
+    pothole: <AlertCircle className="w-5 h-5 text-urbanPulse-green" />,
     construction: <Construction className="w-5 h-5 text-yellow-400" />,
     warning: <AlertTriangle className="w-5 h-5 text-red-500" />,
     success: <Check className="w-5 h-5 text-urbanPulse-green" />,

@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AlertTriangle, Construction, Pothole, MapPin, StopCircle } from 'lucide-react';
+import { AlertTriangle, Construction, AlertCircle, MapPin, StopCircle } from 'lucide-react';
 import DetectionAlert from '@/components/DetectionAlert';
 import PulseButton from '@/components/PulseButton';
 
@@ -128,7 +127,7 @@ const RecordingScreen: React.FC = () => {
       {/* Contextual indicators will appear here when detections happen */}
       {recordingTime > 4 && recordingTime < 8 && (
         <div className="absolute bottom-40 left-32 rounded-full w-12 h-12 border-2 border-urbanPulse-green animate-pulse flex items-center justify-center">
-          <Pothole className="text-urbanPulse-green w-6 h-6" />
+          <AlertCircle className="text-urbanPulse-green w-6 h-6" />
         </div>
       )}
       

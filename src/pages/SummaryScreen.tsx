@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PulseButton from '@/components/PulseButton';
-import { Construction, Pothole, AlertTriangle, Flag, Award } from 'lucide-react';
+import { Construction, AlertCircle, AlertTriangle, Flag, Award } from 'lucide-react';
 
 interface Detection {
   type: string;
@@ -39,7 +38,7 @@ const SummaryScreen: React.FC = () => {
   const getIcon = (type: string) => {
     switch (type) {
       case 'pothole':
-        return <Pothole className="w-6 h-6 text-urbanPulse-green" />;
+        return <AlertCircle className="w-6 h-6 text-urbanPulse-green" />;
       case 'construction':
         return <Construction className="w-6 h-6 text-yellow-400" />;
       case 'faded-lanes':
