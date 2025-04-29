@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { AlertTriangle, Construction, AlertCircle, MapPin, StopCircle } from 'lucide-react';
 import DetectionAlert from '@/components/DetectionAlert';
 import PulseButton from '@/components/PulseButton';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 // Mock data for simulated detections
 const mockDetections = [
@@ -19,6 +21,7 @@ const RecordingScreen: React.FC = () => {
   const [recordingTime, setRecordingTime] = useState(0);
   const [showDetection, setShowDetection] = useState<{ type: 'pothole' | 'construction' | 'warning' | 'success', message: string } | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
   
   // Format seconds as MM:SS
   const formatTime = (seconds: number): string => {
@@ -73,10 +76,50 @@ const RecordingScreen: React.FC = () => {
     return () => detectionTimers.forEach(timer => clearTimeout(timer));
   }, []);
 
-  // Initialize MapBox if needed
+  // Initialize MapBox
   useEffect(() => {
-    // Here we would normally initialize Mapbox but we're not doing it in this prototype
-    // since we don't have an actual API key
+    if (!mapContainerRef.current) return;
+
+    // Set Mapbox access token
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY2FybGtob2N2ayIsImEiOiJjbWEybWNveHEyOXB4MmlzNzN5Z2xja3F3In0.ASmtqevARyohBUYjOyTrbw';
+    
+    // Create the map instance
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/mapbox/dark-v11', // Use a dark theme to match our app style
+      center: [103.8198, 1.3521], // Singapore coordinates
+      zoom: 13,
+      pitch: 30,
+    });
+    
+    // Add navigation controls
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+    
+    // Store the map instance in the ref
+    mapRef.current = map;
+    
+    // Simulate movement
+    let i = 0;
+    const simulateMovement = () => {
+      if (mapRef.current) {
+        const center = mapRef.current.getCenter();
+        center.lng += 0.0001;
+        center.lat += (Math.random() - 0.5) * 0.0001;
+        mapRef.current.panTo(center);
+      }
+      i++;
+      if (i < 100) setTimeout(simulateMovement, 500);
+    };
+    
+    map.on('load', () => {
+      simulateMovement();
+    });
+    
+    // Clean up on unmount
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
   }, []);
   
   return (
@@ -86,7 +129,7 @@ const RecordingScreen: React.FC = () => {
         <div className="w-full h-2/3 bg-gray-900 flex items-center justify-center overflow-hidden">
           <iframe
             className="w-full h-full"
-            src="https://www.youtube.com/embed/6ZFs7zolVHk?autoplay=1&mute=1&controls=0&disablekb=1&loop=1&modestbranding=1&showinfo=0&playlist=6ZFs7zolVHk"
+            src="https://www.youtube.com/embed/eIvgj0ImrQA?autoplay=1&mute=1&controls=0&disablekb=1&loop=1&modestbranding=1&showinfo=0&playlist=eIvgj0ImrQA"
             title="Road Map Footage"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -97,16 +140,7 @@ const RecordingScreen: React.FC = () => {
       
       {/* Mapbox map at bottom */}
       <div className="absolute bottom-24 left-4 right-4 h-1/4 bg-gray-800 rounded-lg overflow-hidden">
-        <div ref={mapContainerRef} className="w-full h-full">
-          {/* Placeholder for MapBox */}
-          <div className="w-full h-full bg-gradient-to-r from-urbanPulse-darkGray to-gray-800 flex items-center justify-center">
-            <div className="city-grid absolute inset-0 opacity-30"></div>
-            <div className="text-urbanPulse-lightGray text-sm">
-              <MapPin className="w-5 h-5 mb-2 mx-auto text-urbanPulse-green animate-pulse" />
-              Real-time location tracking
-            </div>
-          </div>
-        </div>
+        <div ref={mapContainerRef} className="w-full h-full"></div>
       </div>
       
       {/* Status bar at the top */}
