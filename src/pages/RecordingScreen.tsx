@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'; // Ensure useCallback is imported
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AlertTriangle, Construction, AlertCircle, MapPin, StopCircle, Gauge, Footprints, Spline, TrafficCone, Car, Ban, CloudRain } from 'lucide-react';
+// Import more icons as needed for map markers
+import { AlertTriangle, Construction, AlertCircle, MapPin, StopCircle, Gauge, Footprints, Spline, TrafficCone, Car, Ban, CloudRain, CircleDot, Pothole, SquareParking, TrafficSignal, Trash2, SearchX, CircleSlash2, Users, Waves, Wind } from 'lucide-react';
 import DetectionAlert from '@/components/DetectionAlert';
 import PulseButton from '@/components/PulseButton';
 import mapboxgl, { LngLatLike } from 'mapbox-gl'; // Import LngLatLike
