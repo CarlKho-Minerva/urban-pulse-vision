@@ -16,25 +16,132 @@ const timeToMs = (time: string): number => {
 
 // Refactored mock data for more Singapore-relevant, government-useful events
 const newMockDetections = [
-  { time: "00:03", message: "Pothole detected on left lane.", type: "pothole", displayPosition: { x: 0.35, y: 0.8 } },
-  { time: "00:08", message: "Faded lane marking detected.", type: "faded-lanes", displayPosition: { x: 0.5, y: 0.7 } },
-  { time: "00:15", message: "Illegal parking detected (double yellow line).", type: "illegal-parking", displayPosition: { x: 0.2, y: 0.6 } },
-  { time: "00:22", message: "Construction zone detected ahead.", type: "construction", displayPosition: { x: 0.85, y: 0.4 } },
-  { time: "00:29", message: "Pedestrian jaywalking detected.", type: "pedestrian-violation", displayPosition: { x: 0.6, y: 0.5 } },
-  { time: "00:35", message: "Flood-prone area: water on road.", type: "flood", displayPosition: { x: 0.5, y: 0.85 } },
-  { time: "00:41", message: "Roadwork sign detected.", type: "roadwork-sign", displayPosition: { x: 0.8, y: 0.4 } },
-  { time: "00:48", message: "Speed bump detected.", type: "speed-bump", displayPosition: { x: 0.5, y: 0.8 } },
-  { time: "00:55", message: "Blocked drain observed.", type: "blocked-drain", displayPosition: { x: 0.7, y: 0.9 } },
-  { time: "01:02", message: "Tree branch fallen on road.", type: "road-hazard", displayPosition: { x: 0.4, y: 0.7 } },
-  { time: "01:10", message: "Traffic light malfunction detected.", type: "traffic-light-issue", displayPosition: { x: 0.9, y: 0.3 } },
-  { time: "01:18", message: "Bus stop shelter vandalism detected.", type: "vandalism", displayPosition: { x: 0.15, y: 0.5 } },
-  { time: "01:25", message: "Cyclist riding on footpath.", type: "cyclist-violation", displayPosition: { x: 0.6, y: 0.6 } },
-  { time: "01:32", message: "Overflowing rubbish bin detected.", type: "littering", displayPosition: { x: 0.8, y: 0.9 } },
-  { time: "01:40", message: "Pedestrian crossing sign faded.", type: "faded-sign", displayPosition: { x: 0.85, y: 0.4 } },
-  { time: "01:48", message: "Sharp bend ahead.", type: "curve-warning", displayPosition: { x: 0.8, y: 0.4 } },
-  { time: "01:55", message: "Vehicle stopped in yellow box.", type: "yellow-box-violation", displayPosition: { x: 0.5, y: 0.5 } },
-  { time: "02:03", message: "Pedestrian cluster at bus stop.", type: "pedestrian-cluster", displayPosition: { x: 0.15, y: 0.5 } },
-  { time: "02:10", message: "Road surface uneven (subsidence).", type: "rough-road", displayPosition: { x: 0.5, y: 0.8 } }
+  {
+    "time": "00:01",
+    "message": "Wet road surface detected ahead.",
+    "type": "wet-road",
+    "displayPosition": { "x": 0.5, "y": 0.8 }
+  },
+  {
+    "time": "00:02",
+    "message": "Speed limit 50 zone approaching.",
+    "type": "speed-limit",
+    "displayPosition": { "x": 0.8, "y": 0.4 }
+  },
+  {
+    "time": "00:13",
+    "message": "Curve warning sign visible ahead.",
+    "type": "curve-warning",
+    "displayPosition": { "x": 0.8, "y": 0.45 }
+  },
+  {
+    "time": "00:15",
+    "message": "Faded 'X' road marking ahead.",
+    "type": "faded-lanes",
+    "displayPosition": { "x": 0.5, "y": 0.7 }
+  },
+  {
+    "time": "00:15",
+    "message": "Railroad crossing advance warning sign visible.",
+    "type": "railroad-crossing-sign",
+    "displayPosition": { "x": 0.8, "y": 0.4 }
+  },
+  {
+    "time": "00:23",
+    "message": "Railroad crossing crossbuck sign ahead.",
+    "type": "railroad-crossing-sign",
+    "displayPosition": { "x": 0.85, "y": 0.3 }
+  },
+  {
+    "time": "00:28",
+    "message": "Rough road surface at railroad crossing.",
+    "type": "rough-road",
+    "displayPosition": { "x": 0.5, "y": 0.8 }
+  },
+  {
+    "time": "00:33",
+    "message": "Construction or work zone warning sign ahead.",
+    "type": "construction",
+    "displayPosition": { "x": 0.85, "y": 0.4 }
+  },
+  {
+    "time": "00:35",
+    "message": "Pedestrian activity possible, crossing sign ahead.",
+    "type": "pedestrian-crossing-sign",
+    "displayPosition": { "x": 0.85, "y": 0.4 }
+  },
+  {
+    "time": "00:50",
+    "message": "Faded center lane markings visible.",
+    "type": "faded-lanes",
+    "displayPosition": { "x": 0.5, "y": 0.7 }
+  },
+   {
+    "time": "00:52",
+    "message": "Vehicle entering road from left.",
+    "type": "road-hazard",
+    "displayPosition": { "x": 0.2, "y": 0.6 }
+  },
+  {
+    "time": "00:57",
+    "message": "Speed limit reduced to 40.",
+    "type": "speed-limit",
+    "displayPosition": { "x": 0.9, "y": 0.35 }
+  },
+  {
+    "time": "01:02",
+    "message": "Vehicle potentially parked illegally, narrowing road.",
+    "type": "illegal-parking",
+    "displayPosition": { "x": 0.2, "y": 0.6 }
+  },
+    {
+    "time": "01:05",
+    "message": "Vehicle potentially parked too close to driveway.",
+    "type": "illegal-parking",
+    "displayPosition": { "x": 0.2, "y": 0.65 }
+  },
+  {
+    "time": "01:06",
+    "message": "Pedestrian cluster observed near sidewalk.",
+    "type": "pedestrian-cluster",
+    "displayPosition": { "x": 0.15, "y": 0.5 }
+  },
+  {
+    "time": "01:07",
+    "message": "Road narrows due to parked vehicles.",
+    "type": "road-hazard",
+    "displayPosition": { "x": 0.5, "y": 0.6 }
+  },
+  {
+    "time": "01:17",
+    "message": "Object near road edge (decoration).",
+    "type": "road-hazard",
+    "displayPosition": { "x": 0.85, "y": 0.6 }
+  },
+  {
+    "time": "01:48",
+    "message": "Sharp right turn warning sign ahead.",
+    "type": "curve-warning",
+    "displayPosition": { "x": 0.8, "y": 0.4 }
+  },
+   {
+    "time": "01:50",
+    "message": "Vehicle potentially parked illegally, narrowing road.",
+    "type": "illegal-parking",
+    "displayPosition": { "x": 0.2, "y": 0.6 }
+  },
+  {
+    "time": "01:59",
+    "message": "Approaching roundabout or complex intersection.",
+    "type": "intersection",
+    "displayPosition": { "x": 0.5, "y": 0.5 }
+  },
+    {
+    "time": "02:10",
+    "message": "Vehicle potentially parked too close to junction.",
+    "type": "illegal-parking",
+    "displayPosition": { "x": 0.15, "y": 0.6 }
+  }
 ].map((d, index) => ({
   id: index + 1,
   timeMs: timeToMs(d.time),
@@ -47,26 +154,30 @@ const newMockDetections = [
 // Moved outside component: Emoji/icon for each detection type
 const getDetectionEmoji = (type: string): string => {
   switch (type) {
-    case 'pothole': return '🕳️';
+    case 'pothole': return '🕳️'; // Kept from previous
     case 'construction': return '🚧';
     case 'faded-lanes': return '🟨';
-    case 'violation': return '🚫'; // Generic violation
-    case 'illegal-parking': return '🅿️';
-    case 'pedestrian-violation': return '🚶‍♂️🚫'; // Jaywalking
-    case 'flood': return '💧';
-    case 'roadwork-sign': return '🚧'; // Use construction
-    case 'speed-bump': return '〰️';
-    case 'blocked-drain': return '🧱';
-    case 'road-hazard': return '⚠️'; // Fallen branch
-    case 'traffic-light-issue': return '🚦❓';
-    case 'vandalism': return '💥';
-    case 'cyclist-violation': return '🚲🚫';
-    case 'littering': return '🗑️';
-    case 'faded-sign': return '🪧❓';
+    case 'illegal-parking': return '🅿️🚫'; // Updated
+    case 'pedestrian-violation': return '🚶‍♂️🚫'; // Kept from previous
+    case 'flood': return '💧'; // Kept from previous
+    case 'roadwork-sign': return '🚧'; // Kept from previous
+    case 'speed-bump': return '〰️'; // Kept from previous
+    case 'blocked-drain': return '🧱'; // Kept from previous
+    case 'road-hazard': return '⚠️'; // Generic hazard
+    case 'traffic-light-issue': return '🚦❓'; // Kept from previous
+    case 'vandalism': return '💥'; // Kept from previous
+    case 'cyclist-violation': return '🚲🚫'; // Kept from previous
+    case 'littering': return '🗑️'; // Kept from previous
+    case 'faded-sign': return '🪧❓'; // Kept from previous
     case 'curve-warning': return '↪️';
-    case 'yellow-box-violation': return '🟨🚗';
+    case 'yellow-box-violation': return '🟨🚗'; // Kept from previous
     case 'pedestrian-cluster': return '🧑‍🤝‍🧑';
-    case 'rough-road': return '🪨'; // Subsidence
+    case 'rough-road': return '🪨';
+    case 'wet-road': return '🌧️';
+    case 'speed-limit': return '5️⃣0️⃣'; // Example, could be dynamic
+    case 'railroad-crossing-sign': return '🛤️';
+    case 'pedestrian-crossing-sign': return '🚶‍♀️';
+    case 'intersection': return '➕';
     default: return '❗';
   }
 };
